@@ -16,8 +16,29 @@ function createListOnArr(arr) {
   return head.next;
 }
 
+function Logger(limit = 100) {
+  let count = 0;
+  return (...args) => {
+    if (count > limit) return;
+    count++;
+    console.log(...args)
+  }
+}
+
+
+function linkListToArray(node) {
+  const result = [];
+  while (node){
+    result.push(node.val);
+    node = node.next;
+  }
+  return result;
+}
+
 module.exports = {
   ListNode,
   BinaryTreeNode,
   createListOnArr,
+  linkListToArray,
+  logger: Logger(),
 };
