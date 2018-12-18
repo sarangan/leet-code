@@ -8,6 +8,11 @@ function BinaryTreeNode(val) {
   this.left = this.right = null;
 }
 
+function TreeNode(val) {
+  this.val = val;
+  this.children = [];
+}
+
 function createListOnArr(arr) {
   const head = new ListNode();
   arr
@@ -28,7 +33,7 @@ function Logger(limit = 100) {
 
 function linkListToArray(node) {
   const result = [];
-  while (node){
+  while (node) {
     result.push(node.val);
     node = node.next;
   }
@@ -40,5 +45,6 @@ module.exports = {
   BinaryTreeNode,
   createListOnArr,
   linkListToArray,
+  TreeNode,
   logger: Logger(),
 };
