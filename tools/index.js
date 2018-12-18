@@ -40,11 +40,16 @@ function linkListToArray(node) {
   return result;
 }
 
+function getbtn(val) {
+  return new BinaryTreeNode(val);
+}
+
 module.exports = {
   ListNode,
   BinaryTreeNode,
   createListOnArr,
   linkListToArray,
   TreeNode,
+  getbtn,
   logger: Logger(),
 };

@@ -17,8 +17,8 @@ var preorderTraversal = function(root) {
   const traverse = node => {
     if (!node) return null;
     r.push(node.val);
-    preorderTraversal(node.left);
-    preorderTraversal(node.right);
+    traverse(node.left);
+    traverse(node.right);
     return r;
   };
   traverse(root);
