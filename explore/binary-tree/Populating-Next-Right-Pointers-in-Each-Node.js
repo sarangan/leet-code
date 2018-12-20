@@ -38,7 +38,7 @@ function dfsTraverse(root) {
   return stack;
 }
 
-var connect = function(root) {
+var populatingNextRightPointersInEachNode = function(root) {
   if (!root) return;
   const height = depthOfTree(root);
   const dfs = dfsTraverse(root);
@@ -54,5 +54,5 @@ var connect = function(root) {
   }
 };
 
-connect(n1);
+populatingNextRightPointersInEachNode(n1);
 console.log(n1.left.right);
