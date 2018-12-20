@@ -12,40 +12,30 @@ n1.left = n2;
 n1.right = n3;
 n2.left = n4;
 n2.right = n6;
+n3.left = n7;
 n3.right = n5;
-
-function group(arr) {
-  const obj = {};
-  for (let e of arr) {
-    (obj[e.d] === undefined)
-      ? obj[e.d] = [e.n]
-      : obj[e.d].push(e.n);
-  }
-  return Object.values(obj).reduce((prev, next) => {
-    prev.push(next);
-    return prev;
-  }, []);
-}
 
 var connect = function(root) {
   if(!root) return;
-  const nodes = [{ n: root, d: 0 }];
+  const queue = [root];
 
-  const traverse = (node, deep) => {
-    if (node === null) return;
+  while(queue.length) {
+    let size  = queue.length;
 
-    if (node.left) nodes.push({ n: node.left, d: deep });
-    if (node.right) nodes.push({ n: node.right, d: deep });
-
-    traverse(node.left, deep + 1);
-    traverse(node.right, deep + 1);
-  };
-
-  traverse(root, 1);
-  group(nodes).forEach(r => r.forEach((n, i, arr) => {
-    n.next = arr[i + 1]
-  }))
+    for(let i = 0; i < size; i++) {
+      const currentNode = queue.shift();
+      let next;
+      if(i < size - 1) {
+        next = queue[0]
+      } else {
+        next = null;
+      }
+      currentNode.next = next;
+      if(currentNode.left) queue.push(currentNode.left);
+      if(currentNode.right) queue.push(currentNode.right);
+    }
+  }
 };
 
-connect(new LinkedBinaryTreeNode());
+connect(n1);
 console.log(n1);
