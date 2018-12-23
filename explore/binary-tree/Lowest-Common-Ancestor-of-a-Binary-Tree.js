@@ -15,33 +15,34 @@ n2.right = n6;
 n3.left = n7;
 n3.right = n5;
 
-function findCommonAncestor(a1, a2) {
-  const obj = a2.reduce((p, n) => {
-    p[n.val] = n.val;
-    return p;
-  }, {});
-  for (let i = a1.length - 1; i >= 0; i--) {
-    const n = a1[i];
-    if (obj[n.val] !== undefined) return n;
+function pop(arr) {
+  const last = arr.pop();
+  if (last.flag) {
+    if (!arr[arr.length - 1]) return null;
+    if (arr[arr.length - 1].flag) return arr[arr.length - 1];
+    arr[arr.length - 1].flag = true;
   }
+  return null;
 }
 
 var lowestCommonAncestor = function(root, p, q) {
-  const stack = [{ n: root, ancestors: [root] }];
-  let ans1;
-  let i = 0;
+  if (!root) return null;
+  let r = null;
+  const stack = [];
 
-  while (stack[i]) {
-    if (stack[i].n.val === p.val || stack[i].n.val === q.val) {
-      if (ans1) {
-        return findCommonAncestor(ans1.ancestors, stack[i].ancestors);
-      }
-      ans1 = stack[i];
+  const traverse = (node) => {
+    if (r !== null) return;
+    stack.push(node);
+    if (node.val === p.val || node.val === q.val) {
+      stack[stack.length - 1].flag = true;
     }
-    if (stack[i].n.left) stack.push({ n: stack[i].n.left, ancestors: [...stack[i].ancestors, stack[i].n.left] });
-    if (stack[i].n.right) stack.push({ n: stack[i].n.right, ancestors: [...stack[i].ancestors, stack[i].n.right] });
-    i++;
-  }
+    if (node.left) traverse(node.left);
+    if (node.right) traverse(node.right);
+    let t = pop(stack);
+    if (t) r = t;
+  };
+  traverse(root);
+  return r;
 };
 
-console.log(lowestCommonAncestor(n1, new TreeNode(1), new TreeNode(5)));
+console.log(lowestCommonAncestor(n1, new TreeNode(6), new TreeNode(5)));
