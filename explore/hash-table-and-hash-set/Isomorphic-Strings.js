@@ -1,22 +1,16 @@
-function sameAs(s, rules) {
-  for (const rule of rules) {
-    const temp = s[rule[0]];
-    for (const i of rule) {
-      if (s[i] !== temp) return false
-    }
+Array.prototype.equal = function(comparor) {
+  if (this.length !== comparor.length) return false;
+  for (let i = 0; i < this.length; i++) {
+    if (this[i] !== comparor[i]) return false;
   }
   return true;
-}
+};
 
-function notSameAs(s, rules) {
-  const notSameRule = rules.map(rule => rule[0]);
-  const obj = {};
-
-  for (const i of notSameRule) {
-    obj[s[i]] = 1;
-  }
-
-  return Object.keys(obj).length === notSameRule.length;
+function fillDict(s, dict) {
+  s.split('').forEach((e, i) => {
+    if (dict['_' + e] === undefined) dict['_' + e] = [];
+    dict['_' + e].push(i);
+  });
 }
 
 /**
@@ -27,16 +21,20 @@ function notSameAs(s, rules) {
 var isIsomorphic = function(s, t) {
   if (s.length !== t.length) return false;
   if (s === '' && t === '') return true;
-  const dict = {};
-  s.split('').forEach((e, i) => {
-    if (dict[e] === undefined) dict[e] = [];
-    dict[e].push(i);
-  });
+  const dict1 = {}, dict2 = {};
 
-  console.log(dict);
+  fillDict(s, dict1);
+  fillDict(t, dict2);
 
-  return sameAs(t, Object.values(dict)) && notSameAs(t, Object.values(dict));
+  const v1 = Object.values(dict1);
+  const v2 = Object.values(dict2);
+
+  if (v1.length !== v2.length) return false;
+  for (let i = 0; i < v1.length; i++) {
+    if (!v1[i].equal(v2[i])) return false;
+  }
+  return true;
 };
 
-const s = "paper", t = "title";
+const s = "13", t = "42";
 console.log(isIsomorphic(s, t));
