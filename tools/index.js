@@ -48,6 +48,22 @@ function getbtn(val) {
   return new BinaryTreeNode(val);
 }
 
+function createTreeFronString(data) {
+  const arr = data
+    .substring(1, data.length - 1)
+    .split(',')
+    .filter(e => e)
+    .map(e => e === 'null' ? null : new TreeNode(+e));
+  if (arr.length === 0) return null;
+  for (let i = 1; i <= arr.length; i++) {
+    if (arr[2 * i]) arr[i - 1].left = arr[2 * i];
+    if (arr[2 * i + 1]) arr[i - 1].right = arr[2 * i + 1];
+  }
+  arr[0].left = arr[1];
+  arr[0].right = arr[2];
+  return arr[0];
+}
+
 
 module.exports = {
   ListNode,
@@ -57,5 +73,6 @@ module.exports = {
   linkListToArray,
   TreeNode,
   getbtn,
+  createTreeFronString,
   logger: Logger(),
 };
