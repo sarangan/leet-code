@@ -86,6 +86,24 @@ function deserialize (data) {
   return head || null;
 }
 
+function serialize (root) {
+  if (!root) return '[]';
+  const stack = [root];
+  let i = 0;
+  while (stack[i] !== undefined) {
+    if (!stack[i]) {
+      i++;
+      continue;
+    }
+    stack.push(stack[i].left);
+    stack.push(stack[i].right);
+    i++;
+  }
+  while (stack[stack.length - 1] === undefined) {
+    stack.pop();
+  }
+  return '[' + stack.map(e => e ? e.val : 'null').toString() + ']';
+};
 
 module.exports = {
   ListNode,
@@ -96,5 +114,6 @@ module.exports = {
   TreeNode,
   getbtn,
   deserialize,
+  serialize,
   logger: Logger(),
 };
