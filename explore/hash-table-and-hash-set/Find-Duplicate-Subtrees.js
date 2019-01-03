@@ -1,12 +1,12 @@
-const { BinaryTreeNode, createTreeFronString } = require('../../tools');
+const { deserialize } = require('../../tools');
 
-var findDuplicateSubtrees = function(root) {
+var findDuplicateSubtrees = function (root) {
   let obj = {}, res = [];
   preOrder(root, obj, res);
   return res;
 };
 
-function preOrder(root, map, res) {
+function preOrder (root, map, res) {
   if (root === null) return '#';
   let str = root.val + preOrder(root.left, map, res) + preOrder(root.right, map, res);
   if (!map[str]) map[str] = 0;
@@ -16,7 +16,7 @@ function preOrder(root, map, res) {
 }
 
 
-const data = createTreeFronString('[0,0,0,0,null,null,0,null,null,null,0]');
+const data = deserialize('[0,0,0,0,null,null,0,null,null,null,0]');
 
 console.log(data);
 console.log(findDuplicateSubtrees(data));
