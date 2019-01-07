@@ -1,42 +1,37 @@
-function isSame(a1, a2) {
-  if (a1.length !== a2.length) return false;
-  for (let i = 0; i < a1.length; i++) {
-    if (a1[i] !== a2[i]) return false
-  }
-  return true;
-}
-
 /**
  * @param {number[]} nums
  * @return {number[][]}
  */
-var threeSum = function(nums) {
-  const obj = nums.reduce((p, n, i) => {
-    p[n] = i;
-    return p;
-  }, {});
-  console.log(obj);
-  const results = [];
+var threeSum = function (nums) {
+  const sorted = nums.sort((p, n) => p - n);
+  const result = [];
 
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (obj[-(nums[i] + nums[j])] !== undefined && i !== j && j !== obj[-(nums[i] + nums[j])] && i !== obj[-(nums[i] + nums[j])])
-        results.push([-(nums[i] + nums[j]), nums[i], nums[j]]);
+  for (let i = 0; i < sorted.length - 2; i++) {
+    // remove duplicated
+    if (i > 0 && sorted[i] === sorted[i - 1]) continue;
+    const index = sorted[i];
+    let l = i + 1, r = sorted.length - 1;
+    while (l < r) {
+      // console.log(l, r);
+      const total = sorted[l] + sorted[r];
+      if (total === -index) {
+        result.push([index, sorted[l], sorted[r]]);
+
+        while (l + 1 < r && sorted[l + 1] === sorted[l]) l++;
+        while (r - 1 > l && sorted[r - 1] === sorted[r]) r--;
+        l++;
+        r--;
+      }
+      if (total < -index) {
+        l++;
+      }
+      if (total > -index) {
+        r--;
+      }
     }
   }
-  const shakedResults = [];
-  results
-    .map(result => result.sort())
-    .forEach(each => {
-      let exist = false;
-      for (const e of shakedResults) {
-        if (isSame(e, each)) exist = true;
-      }
-      if (!exist) shakedResults.push(each);
-    });
-
-  return shakedResults;
+  return result;
 };
 
 
-console.log(threeSum([-1, 0, 1, 2, -1, -4]));
+console.log(threeSum([-1, 0, 1, 1, 2, -1, -4]));
