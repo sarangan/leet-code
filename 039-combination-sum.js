@@ -25,7 +25,6 @@
 var combinationSum = function (candidates, target) {
   const results = [];
   const stack = [];
-  let searchIndex = 0;
 
   const r = (target, lastIndex) => {
     // console.log(stack, target, lastIndex);
@@ -35,8 +34,7 @@ var combinationSum = function (candidates, target) {
       return;
     }
 
-    for (let i = Math.max(searchIndex, lastIndex); i < candidates.length; i++) {
-      if (stack.length === 0) searchIndex = i;
+    for (let i = lastIndex; i < candidates.length; i++) {
       const n = candidates[i];
       if (target - n >= 0) {
         stack.push(n);
@@ -51,4 +49,4 @@ var combinationSum = function (candidates, target) {
 };
 
 const candidates = [2, 3, 6, 7], target = 7;
-console.log(conbinationSum(candidates, target));
+console.log(combinationSum(candidates, target));
