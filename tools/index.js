@@ -30,6 +30,13 @@ function createListOnArr (arr) {
   return head.next;
 }
 
+/**
+ * only log first {limit} logs.
+ * useful when you are hitting a dead loop.
+ * @param limit
+ * @returns {Function}
+ * @constructor
+ */
 function Logger (limit = 100) {
   let count = 0;
   return (...args) => {
@@ -103,7 +110,18 @@ function serialize (root) {
     stack.pop();
   }
   return '[' + stack.map(e => e ? e.val : 'null').toString() + ']';
-};
+}
+
+class Interval {
+  constructor (start, end) {
+    this.start = start;
+    this.end = end;
+  }
+
+  toString () {
+    return `[${this.start} - ${this.end}]`;
+  }
+}
 
 module.exports = {
   ListNode,
@@ -115,5 +133,6 @@ module.exports = {
   getbtn,
   deserialize,
   serialize,
+  Interval,
   logger: Logger(),
 };
