@@ -1,6 +1,5 @@
 const { ListNode, TreeNode, createListOnArr } = require('./tools');
 const findMid = (head) => {
-  console.log(head.val);
   let prev = head, slow = head, fast = head;
   while (fast.next && fast.next.next) {
     prev = slow;
