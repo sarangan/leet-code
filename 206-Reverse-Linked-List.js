@@ -4,11 +4,19 @@ const { ListNode, createListOnArr, linkListToArray } = require('./tools');
  * @return {ListNode}
  */
 var reverseList = function (head) {
-  if (head === null || head.next === null) return head;
-  const p = reverseList(head.next);
-  head.next.next = head;
-  head.next = null;
-  return p;
+  let node = new ListNode(null);
+  while (head) {
+    const currentNext = head.next;
+    if (node.next) {
+      head.next = node.next;
+      node.next = head;
+    } else {
+      head.next = null;
+      node.next = head;
+    }
+    head = currentNext;
+  }
+  return node.next;
 };
 
 
