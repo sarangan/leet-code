@@ -18,25 +18,20 @@ var numIslands = function (grid) {
   return count;
 };
 
-function findValidNeighbour (i, j, m, n) {
-  return [
+
+function dfs (i, j, m, n, map, grid) {
+  if (i < 0 || i >= m || j < 0 || j >= n) return;
+  if (grid[i][j] === '0') return;
+
+  map[`${i}-${j}`] = true;
+  [
     [i - 1, j],
     [i + 1, j],
     [i, j - 1],
     [i, j + 1]
-  ].filter(([i, j]) => i >= 0 && i < m && j >= 0 && j < n)
-}
-
-function dfs (i, j, m, n, map, grid) {
-  const neighbours = findValidNeighbour(i, j, m, n)
-    .filter(([i, j]) => !map[`${i}-${j}`]);
-
-  neighbours.forEach(([i, j]) => {
-    if (grid[i][j] === '1') {
-      map[`${i}-${j}`] = true;
-      dfs(i, j, m, n, map, grid);
-    }
-  });
+  ]
+    .filter(([i, j]) => !map[`${i}-${j}`])
+    .forEach(([i, j]) => dfs(i, j, m, n, map, grid));
 }
 
 
