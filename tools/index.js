@@ -112,6 +112,12 @@ function serialize (root) {
   return '[' + stack.map(e => e ? e.val : 'null').toString() + ']';
 }
 
+function UndirectedGraphNode (label) {
+  this.label = label;
+  this.neighbors = [];   // Array of UndirectedGraphNode
+}
+
+
 class Interval {
   constructor (start, end) {
     this.start = start;
@@ -134,5 +140,6 @@ module.exports = {
   deserialize,
   serialize,
   Interval,
+  UndirectedGraphNode,
   logger: Logger(),
 };
